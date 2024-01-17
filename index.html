@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+
+    <script src="script.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/cbc4fe0430.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="player">
+      <div class="wrapper">
+        <div class="details">
+          <div class="now-playing">SONG NAME</div>
+          <div class="track-art"></div>
+          <div class="track-name">NAME</div>
+          <div class="track-artist">Artist</div>
+        </div>
+
+        <div class="slider-container">
+          <div class="current-time time">00:00</div>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="0"
+            class="seek-slider slider"
+            onchange="SeekTo()"
+          />
+          <div class="total-duration time">00:00</div>
+        </div>
+
+        <div class="buttons">
+          <div class="random-track" onclick="RandomTrack()">
+            <i class="fa-solid fa-shuffle" title="random"></i>
+          </div>
+          <div class="previous-track" onclick="PreviousTrack()">
+            <i class="fa-solid fa-backward-step"></i>
+          </div>
+          <div class="playpause-track" onclick="PlayPauseTrack()">
+            <i class="fa-solid fa-circle-play"></i>
+          </div>
+          <div class="next-track" onclick="NextTrack()">
+            <i class="fa-solid fa-forward-step"></i>
+          </div>
+          <div class="repeat-track" onclick="RepeatTrack()">
+            <i class="fa-solid fa-repeat"></i>
+          </div>
+        </div>
+
+        <div class="slider-container">
+          <i class="fa-solid fa-volume-low volume"></i>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="100"
+            class="seek-volume slider"
+            onchange="SetVolume()"
+          />
+          <i class="fa-solid fa-volume-high volume"></i>
+        </div>
+        <div id="wave">
+          <span class="stroke"></span>
+          <span class="stroke"></span>
+          <span class="stroke"></span>
+          <span class="stroke"></span>
+          <span class="stroke"></span>
+          <span class="stroke"></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
