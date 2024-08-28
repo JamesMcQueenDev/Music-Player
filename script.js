@@ -15,6 +15,8 @@ let wave = document.querySelector(".wave");
 let random_icon = document.querySelector(".fa-shuffle");
 let current_track = document.createElement("audio");
 
+current_track.addEventListener("ended", NextTrack);
+
 let track_index = 0;
 let isPlaying = false;
 let isRandom = false;
@@ -55,8 +57,6 @@ function LoadTrack(track_index) {
     "Playing Music " + (track_index + 1) + " of " + music_list.length;
 
   updateTimer = setInterval(SetUpdate, 1000);
-
-  current_track.addEventListener("ended", NextTrack);
 }
 
 function Reset() {
@@ -128,43 +128,30 @@ function SeekTo() {
   seek_slider.value = seek_slider.value;
 }
 
+/* Currently not working, something to do with the audio tag* 
 function SetVolume() {
-  current_track.volume = volume_slider.value / 100;
+  const volumeValue = Math.max(0, Math.min(100, volume_slider.value));
+  current_track.volume = volumeValue / 100;
 }
+*/
 
 function SetUpdate() {
-  let seek_position = 0;
   if (!isNaN(current_track.duration)) {
-    seek_position = current_track * (100 / current_track.duration);
-    seek_slider.value = seek_position;
+    const sliderPosition =
+      (current_track.currentTime / current_track.duration) * 100;
+    seek_slider.value = sliderPosition;
 
-    let current_minutes = Math.floor(current_track.currentTime / 60);
-    let current_seconds = Math.floor(
-      current_track.currentTime - current_minutes * 60
-    );
-    let duration_minutes = Math.floor(current_track.currentTime / 60);
-    let duration_seconds = Math.floor(
-      current_track.currentTime - duration_minutes * 60
-    );
+    const currentMinutes = Math.floor(current_track.currentTime / 60);
+    const currentSeconds = Math.floor(current_track.currentTime % 60)
+      .toString()
+      .padStart(2, "0");
+    const durationMinutes = Math.floor(current_track.duration / 60);
+    const durationSeconds = Math.floor(current_track.duration % 60)
+      .toString()
+      .padStart(2, "0");
 
-    if (current_seconds < 10) {
-      current_seconds = "0" + current_seconds;
-    }
-
-    if (duration_seconds < 10) {
-      duration_seconds = "0" + duration_seconds;
-    }
-
-    if (current_minutes < 10) {
-      current_minutes = "0" + current_minutes;
-    }
-
-    if (duration_minutes < 10) {
-      duration_minutes = "0" + duration_minutes;
-    }
-
-    current_time.textContent = current_minutes + ":" + current_seconds;
-    total_duration.textContent = duration_minutes + ":" + duration_seconds;
+    current_time.textContent = `${currentMinutes}:${currentSeconds}`;
+    total_duration.textContent = `${durationMinutes}:${durationSeconds}`;
   }
 }
 
